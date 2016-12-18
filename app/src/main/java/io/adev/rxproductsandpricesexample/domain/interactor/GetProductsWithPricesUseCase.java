@@ -29,6 +29,15 @@ public final class GetProductsWithPricesUseCase extends UseCase<List<Pair<Produc
 
     private static final Scheduler sCommonScheduler = Schedulers.from(Executors.newSingleThreadExecutor());
 
+    static {
+        sCommonScheduler.scheduleDirect(new Runnable() {
+            @Override
+            public void run() {
+                Thread.currentThread().setName("common-thread");
+            }
+        });
+    }
+
     @Override
     protected Observable<List<Pair<Product, Price>>> buildSource() {
 
